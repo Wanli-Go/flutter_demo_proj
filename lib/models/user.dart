@@ -1,12 +1,10 @@
-
 class User {
   final String id;
-  final String name;
+  String name;
   final String email;
 
   User({required this.id, required this.name, required this.email});
 
-  // Create a User from a JSON object
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'],
@@ -15,7 +13,6 @@ class User {
     );
   }
 
-  // Convert User to a JSON object
   Map<String, dynamic> toJson() {
     return {
       'id': id,

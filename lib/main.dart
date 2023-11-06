@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'views/main_page.dart';
-import 'view_models/user_view_model.dart';
+
+// 程序的切入点
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -12,18 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<UserViewModel>(
-      // Create an instance of UserViewModel
-      create: (context) => UserViewModel(),
-      // Be sure to dispose UserViewModel when it's no longer needed
-      dispose: (context, viewModel) => viewModel.dispose(),
-      child: MaterialApp(
+    return MaterialApp(
         title: 'Flutter MVVM Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         home: const MainPage(),
-      ),
-    );
+      );
   }
 }

@@ -1,17 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../view_models/user_view_model.dart';
 import '../models/user.dart'; // Reference to your User model.
 
-class UserPage extends StatelessWidget {
+class UserPage extends StatefulWidget {
+  final String response;
+
+  const UserPage({super.key, required this.response});
+
+  @override
+  _UserPageState createState() => _UserPageState();
+}
+
+class _UserPageState extends State<UserPage> {
+  late UserViewModel _viewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _viewModel = UserViewModel(content: widget.response); // 新建一个ViewModel
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose(); // Dispose the ViewModel to close the stream
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Page'),
+        title: Text('User Page for ${widget.response}'),
       ),
       body: StreamBuilder<User>(
-        stream: Provider.of<UserViewModel>(context, listen: false).userStream,
+        stream: _viewModel.userStream, // Listen directly to the ViewModel's stream
         builder: (context, snapshot) {
           // Checking connection state first
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -30,3 +52,4 @@ class UserPage extends StatelessWidget {
     );
   }
 }
+
